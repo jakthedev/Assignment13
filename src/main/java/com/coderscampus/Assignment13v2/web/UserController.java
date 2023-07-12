@@ -1,5 +1,6 @@
 package com.coderscampus.Assignment13v2.web;
 
+import com.coderscampus.Assignment13v2.domain.Account;
 import com.coderscampus.Assignment13v2.domain.User;
 import com.coderscampus.Assignment13v2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ public class UserController {
     @GetMapping("/users")
     public String getAllUsers(ModelMap model) {
         Set<User> users = userService.findAllUsersWithAccountsAndAddress();
+
         model.put("users", users);
         if (users.size() == 1) {
             model.put("user", users.iterator().next());
@@ -48,6 +50,8 @@ public class UserController {
     @GetMapping("/users/{userid}")
     public String getOneUser(ModelMap model, @PathVariable Long userid) {
         User user = userService.findById(userid);
+        List<Account> accounts = userService.findByAccountId(userid);
+        model.put("accounts", accounts);
         model.put("users", Arrays.asList(user));
         model.put("user", user);
         return "users";

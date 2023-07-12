@@ -1,5 +1,7 @@
 package com.coderscampus.Assignment13v2.service;
 
+import com.coderscampus.Assignment13v2.domain.Account;
+import com.coderscampus.Assignment13v2.repository.AccountRepository;
 import com.coderscampus.Assignment13v2.repository.UserRepository;
 import com.coderscampus.Assignment13v2.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    private AccountRepository accountRepo;
 
     public List<User> findByUsername(String username) {
         return userRepo.findByUsername(username);
@@ -55,5 +60,9 @@ public class UserService {
 
     public void delete(Long userid) {
         userRepo.deleteById(userid);
+    }
+
+    public List<Account> findByAccountId(Long id) {
+        return accountRepo.findByAccountId(id);
     }
 }

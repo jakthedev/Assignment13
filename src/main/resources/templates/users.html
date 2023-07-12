@@ -7,7 +7,7 @@
 </head>
     <body>
     <h1> Users </h1>
-        <div th:if="${#lists.size(users) == 1}">
+        <div th:if="${#lists.size(users) == 1}" >
             <form action="" method="post">
                 <div>
                     Full Name: <input type="text" th:field="${user.name}"/>
@@ -18,6 +18,23 @@
                 <div>
                     Password: <input type="password" th:field="${user.password}"/>
                 </div>
+                <hr>
+                <div>
+                    Address Line 1: <input type="text" th:field="${user.address.address_line1}" />
+                </div>
+                <div>
+                    Address Line 2: <input type="text" th:field="${user.address.address_line2}" />
+                </div>
+                <div>
+                    City: <input type="text" th:field="${user.address.city}" />
+                </div>
+                <div>
+                    Country: <input type="text" th:field="${user.address.country}" />
+                </div>
+                <div>
+                    Region: <input type="text" th:field="${user.address.region}" />
+                </div>
+                <hr>
                 <div>
                     <input type="submit" value="Update User Account" />
                 </div>
@@ -25,6 +42,7 @@
             <form th:action="@{/users/{userid}/delete(userid=${user.userid})}" method="post">
                 <input type="submit" value="Delete User Account" />
             </form>
+
         </div>
 
         <div th:unless="${#lists.size(users) == 1}" th:each="user : ${users}">
@@ -32,9 +50,9 @@
             <span th:text="${user.username}"> </span> <br />
             <span th:text="${user.password}"> </span> <br />
             <span th:text="${user.name}"> </span> <br />
-<!--                    <div th:each="account : ${user.accounts}">-->
-<!--                        <span th:text="${account.accountName}"></span>-->
-<!--                    </div>-->
+                    <div th:each="account : ${user.accounts}">
+                        <span th:text="${account.accountName}"></span>
+                    </div>
             <hr>
         </div>
     </body>
