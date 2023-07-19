@@ -16,7 +16,7 @@ public class User {
     private String name;
     private LocalDate createdDate;
     private List<Account> accounts = new ArrayList<>();
-
+    @PrimaryKeyJoinColumn
     private Address address;
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,7 +63,7 @@ public class User {
         this.name = name;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "user_account",
                 joinColumns = @JoinColumn(name= "user_id"),
                 inverseJoinColumns = @JoinColumn(name= "account_id"))
@@ -75,7 +75,7 @@ public class User {
         this.accounts = accounts;
     }
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     public Address getAddress() {
         return address;
     }

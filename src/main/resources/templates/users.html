@@ -9,6 +9,9 @@
     <h1> Users </h1>
         <div th:if="${#lists.size(users) == 1}" >
             <form action="" method="post">
+<!--                <div>-->
+<!--                <input class="form-control" type="hidden" th:field="${user.id}" />-->
+<!--                </div>-->
                 <div>
                     Full Name: <input type="text" th:field="${user.name}"/>
                 </div>
@@ -42,6 +45,17 @@
             <form th:action="@{/users/{userid}/delete(userid=${user.userid})}" method="post">
                 <input type="submit" value="Delete User Account" />
             </form>
+            <hr>
+            <h2> Accounts </h2>
+            <div th:each="account : ${user.accounts}">
+                <a th:href="@{/users/{userid}/accounts/{accountId}(userid=${user.userid},accountId=${account.accountId})}"
+                   th:text="${account.accountName}"></a>
+                <br>
+                <input type="submit" th:action="@{/userBankAccount}"
+                       method="post" value="Apply For / Update Bank Account" />
+            </div>
+
+            <a href="/users">Go Back</a>
 
         </div>
 

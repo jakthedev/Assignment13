@@ -1,6 +1,9 @@
 package com.coderscampus.Assignment13v2.domain;
 
 import jakarta.persistence.*;
+
+import java.util.Objects;
+
 @Entity
 public class Address {
     private Long userId;
@@ -12,7 +15,7 @@ public class Address {
     private String country;
     private Integer zipcode;
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     public Long getUserId() {
         return userId;
     }
@@ -21,7 +24,7 @@ public class Address {
         this.userId = userId;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @MapsId
     @JoinColumn(name="user_id")
     public User getUser() {
@@ -84,6 +87,18 @@ public class Address {
 
     public void setZipcode(Integer zipcode) {
         this.zipcode = zipcode;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Address address)) return false;
+        return Objects.equals(getUserId(), address.getUserId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUserId());
     }
 }
 

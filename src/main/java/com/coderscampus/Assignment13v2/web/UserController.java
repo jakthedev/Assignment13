@@ -1,7 +1,11 @@
 package com.coderscampus.Assignment13v2.web;
 
 import com.coderscampus.Assignment13v2.domain.Account;
+import com.coderscampus.Assignment13v2.domain.Address;
 import com.coderscampus.Assignment13v2.domain.User;
+import com.coderscampus.Assignment13v2.repository.AccountRepository;
+import com.coderscampus.Assignment13v2.service.AccountService;
+import com.coderscampus.Assignment13v2.service.AddressService;
 import com.coderscampus.Assignment13v2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +25,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AddressService addressService;
+
     @GetMapping("/register")
     public String getCreateUser(ModelMap model) {
         model.put("user", new User());
@@ -36,6 +43,7 @@ public class UserController {
 
     }
 
+
     @GetMapping("/users")
     public String getAllUsers(ModelMap model) {
         Set<User> users = userService.findAllUsersWithAccountsAndAddress();
@@ -49,18 +57,32 @@ public class UserController {
 
     @GetMapping("/users/{userid}")
     public String getOneUser(ModelMap model, @PathVariable Long userid) {
-        User user = userService.findById(userid);
-        List<Account> accounts = userService.findByAccountId(userid);
-        model.put("accounts", accounts);
-        model.put("users", Arrays.asList(user));
-        model.put("user", user);
-        return "users";
+        User user = userService.findByIdWithAccounts(userid);
+        Address address = new Address();
+        //List<Account> accounts = userService.findByAccountId(userid);
+        if (user.getAddress() == null) {
+
+            address.setUser(user);
+            address.setUserId(userid);
+            user.setAddress(address);
 
         }
 
+        model.put("users", Arrays.asList(user));
+        model.put("user", user);
+        model.put("address", user.getAddress());
+        return "users";
+        }
+
       @PostMapping("/users/{userid}")
-      public String updateThisUser(@PathVariable Long userid, User user) {
+      public String updatePostThisUser(@PathVariable Long userid, User user) {
+        user.setUserid(userid);
+        User existingUser = userService.findByIdWithAccounts(userid);
+        user.setAccounts(existingUser.getAccounts());
+        Address address = addressService.save(user.getAddress());
+        user.setAddress(address);
         userService.saveUser(user);
+
         return "redirect:/users/"+user.getUserid();
       }
 
@@ -69,6 +91,5 @@ public class UserController {
         userService.delete(userid);
         return "redirect:/users";
       }
-
     }
 
