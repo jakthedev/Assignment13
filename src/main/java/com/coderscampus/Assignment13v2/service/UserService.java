@@ -71,15 +71,7 @@ public class UserService {
             user.getAccounts().add(savings);
             accountRepo.save(checking);
             accountRepo.save(savings);
-//        } else {
-//            List<User> returnedUser = findByUsername(user.getUsername());
-//            User existingUser = returnedUser.get(0);
-//            //findByIdWithAccounts(existingUser.getUserid());
-//            user.setAddress(existingUser.getAddress());
-//            user.setAccounts(existingUser.getAccounts());
-////            Address address = addressService.save(user.getAddress());
-////            user.setAddress(address);
-      }
+        }
         return userRepo.save(user);
     }
 

@@ -61,11 +61,9 @@ public class UserController {
         Address address = new Address();
         //List<Account> accounts = userService.findByAccountId(userid);
         if (user.getAddress() == null) {
-
             address.setUser(user);
             address.setUserId(userid);
             user.setAddress(address);
-
         }
 
         model.put("users", Arrays.asList(user));
@@ -76,11 +74,13 @@ public class UserController {
 
       @PostMapping("/users/{userid}")
       public String updatePostThisUser(@PathVariable Long userid, User user) {
-        user.setUserid(userid);
+        user.getAddress().setUserId(userid);
+        user.getAddress().setUser(user);
         User existingUser = userService.findByIdWithAccounts(userid);
         user.setAccounts(existingUser.getAccounts());
-        Address address = addressService.save(user.getAddress());
-        user.setAddress(address);
+        user.setAddress(addressService.save(user.getAddress()));
+        //Address address = addressService.save(user.getAddress(), userid, user);
+        //user.setAddress(address);
         userService.saveUser(user);
 
         return "redirect:/users/"+user.getUserid();

@@ -9,9 +9,6 @@
     <h1> Users </h1>
         <div th:if="${#lists.size(users) == 1}" >
             <form action="" method="post">
-<!--                <div>-->
-<!--                <input class="form-control" type="hidden" th:field="${user.id}" />-->
-<!--                </div>-->
                 <div>
                     Full Name: <input type="text" th:field="${user.name}"/>
                 </div>
@@ -48,7 +45,7 @@
             <hr>
             <h2> Accounts </h2>
             <div th:each="account : ${user.accounts}">
-                <a th:href="@{/users/{userid}/accounts/{accountId}(userid=${user.userid},accountId=${account.accountId})}"
+                <a th:href="@{/users/{userid}/userBankAccount/{accountId}(userid=${user.userid},accountId=${account.accountId})}"
                    th:text="${account.accountName}"></a>
                 <br>
                 <input type="submit" th:action="@{/userBankAccount}"
@@ -60,12 +57,17 @@
         </div>
 
         <div th:unless="${#lists.size(users) == 1}" th:each="user : ${users}">
-            <span th:text="${user.userid}"> </span> <br />
-            <span th:text="${user.username}"> </span> <br />
-            <span th:text="${user.password}"> </span> <br />
-            <span th:text="${user.name}"> </span> <br />
+            Id Number:  <span style="color: red" th:text="${user.userid}"> </span> <br />
+            Username: <span style="color: red" th:text="${user.username}"> </span> <br />
+            Password: <span style="color: white" th:text="${user.password}"> </span> <br />
+            Name: <span style="color: green" th:text="${user.name}"> </span> <br />
+            Address First Line: <span style="color: red" th:text="${user.address.address_line1}"> </span> <br />
+            Address Second Line: <span style="color: red" th:text="${user.address.address_line2}"> </span> <br />
+            City: <span style="color: red" th:text="${user.address.city}"> </span> <br />
+            Country: <span style="color: red" th:text="${user.address.country}"> </span> <br />
+            Region: <span style="color: red" th:text="${user.address.region}"> </span> <br />
                     <div th:each="account : ${user.accounts}">
-                        <span th:text="${account.accountName}"></span>
+                        Account: <span style="color: deepskyblue" th:text="${account.accountName}"></span>
                     </div>
             <hr>
         </div>

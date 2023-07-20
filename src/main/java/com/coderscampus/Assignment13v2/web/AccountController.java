@@ -39,7 +39,7 @@ public class AccountController {
         return "redirect:/users/"+userid+"/accounts/"+account.getAccountId();
     }
 
-    @GetMapping("{accountId}")
+    @GetMapping("/users/{userid}/userBankAccount/{accountId}")
     public String getAccount(ModelMap model, @PathVariable Long userid, @PathVariable Long accountId) {
         Account account = accountService.findById(accountId);
         User user = userService.findById(userid);
