@@ -5,6 +5,7 @@
     <title> Register Page </title>
 </head>
 <body>
+
 <h1>Register For Your Account</h1>
 
   <form action="" method="post">
@@ -17,6 +18,21 @@
      <div>
          Password: <input type="password" th:field="${user.password}"/>
      </div>
+      <div>
+          Address Line 1: <input type="text" th:field="${user.address.address_line1}" />
+      </div>
+      <div>
+          Address Line 2: <input type="text" th:field="${user.address.address_line2}" />
+      </div>
+      <div>
+          City: <input type="text" th:field="${user.address.city}" />
+      </div>
+      <div>
+          Country: <input type="text" th:field="${user.address.country}" />
+      </div>
+      <div>
+          Region: <input type="text" th:field="${user.address.region}" />
+      </div>
      <div>
          <input type="submit" value="Submit" />
      </div>

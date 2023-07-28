@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Create and Update New Bank Account Page </title>
+</head>
+<body>
+
+<h1> Create and Update New Bank Account Page  </h1>
+
+<form action="" method="post">
+<!--    <div th:if="${not #lists.isEmpty(thisUserAcc.accounts)}"-->
+<!--         th:with="lastAccount=${thisUserAcc.accounts[#lists.size(thisUserAcc.accounts) - 1]}">-->
+    <div>
+        Account Name: <input type="text" th:field="${registerNewUserAccount.accountName}"/>
+    </div>
+    <div>
+        <input type="submit" value="Submit" />
+    </div>
+</form>
+</body>
+</html>

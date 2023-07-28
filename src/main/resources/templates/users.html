@@ -45,19 +45,27 @@
             <hr>
             <h2> Accounts </h2>
             <div th:each="account : ${user.accounts}">
-                <a th:href="@{/users/{userid}/userBankAccount/{accountId}(userid=${user.userid},accountId=${account.accountId})}"
+                <a th:href="@{/users/{userid}/useraccount/{accountId}(userid=${user.userid},accountId=${account.accountId})}"
                    th:text="${account.accountName}"></a>
-                <br>
-                <input type="submit" th:action="@{/userBankAccount}"
-                       method="post" value="Apply For / Update Bank Account" />
             </div>
-
+            <hr>
+            <div th:each="account : ${user.accounts}">
+                <a th:href="@{/users/{userid}/useraccount/{accountId}(userid=${user.userid},accountId=${account.accountId})}">
+                Apply For / Update Bank Account </a>
+            </div>
+            <div>
+<!--                <input type="hidden" th:field="${accounts.accountId}"/>-->
+                <a th:href="@{/users/{userid}/registerNewUserAccount/(userid=${user.userid})}"
+                        >
+                Create New Account
+                </a>
+            </div>
             <a href="/users">Go Back</a>
 
         </div>
 
         <div th:unless="${#lists.size(users) == 1}" th:each="user : ${users}">
-            Id Number:  <span style="color: red" th:text="${user.userid}"> </span> <br />
+            Id Number:  <a th:href="@{/users/} + ${user.userid}"><span style="color: red" th:text="${user.userid}"> </span></a> <br />
             Username: <span style="color: red" th:text="${user.username}"> </span> <br />
             Password: <span style="color: white" th:text="${user.password}"> </span> <br />
             Name: <span style="color: green" th:text="${user.name}"> </span> <br />
@@ -67,7 +75,8 @@
             Country: <span style="color: red" th:text="${user.address.country}"> </span> <br />
             Region: <span style="color: red" th:text="${user.address.region}"> </span> <br />
                     <div th:each="account : ${user.accounts}">
-                        Account: <span style="color: deepskyblue" th:text="${account.accountName}"></span>
+                        Account: <a th:href="@{/users/} + ${user.userid} + @{/useraccount/}
+                        + ${account.accountId}"><span style="color: deepskyblue" th:text="${account.accountName}"></span></a>
                     </div>
             <hr>
         </div>

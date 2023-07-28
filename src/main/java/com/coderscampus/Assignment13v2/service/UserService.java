@@ -57,7 +57,28 @@ public class UserService {
         return userOpt.orElse(new User());
     }
 
+    public Account createAccount(Long userid) {
+        User user = findById(userid);
+
+        if (user != null) {
+            Account newaccount = new Account();
+            newaccount.getUsers().add(user);
+            newaccount.setAccountName("Account #" + user.getAccounts().size());
+
+            user.getAccounts().add(newaccount);
+            userRepo.save(user);
+            accountRepo.save(newaccount);
+
+            return newaccount;
+        }
+        return null;
+    }
+
     public User saveUser(User user) {
+        //user.getAddress().setUserId(user.getUserid());
+        User newUser = new User();
+        user.setUserid(newUser.getUserid());
+        user.getAddress().setUser(user);
         if (user.getUserid() == null) {
             Account checking = new Account();
             checking.setAccountName("Checking Account");
@@ -66,12 +87,25 @@ public class UserService {
             savings.setAccountName("Savings Account");
             savings.getUsers().add(user);
 
+//            Address address = new Address();
+//            address.setAddress_line1(user.getAddress().getAddress_line1());
+//            address.setAddress_line2(user.getAddress().getAddress_line2());
+//            address.setCity(user.getAddress().getCity());
+//            address.setCountry(user.getAddress().getCountry());
+//            address.setRegion(user.getAddress().getRegion());
+
+            // Set the address property on the User object
+//            user.setAddress(user.getAddress());
+//            addressRepo.save(address);
+
+
 
             user.getAccounts().add(checking);
             user.getAccounts().add(savings);
             accountRepo.save(checking);
             accountRepo.save(savings);
         }
+
         return userRepo.save(user);
     }
 

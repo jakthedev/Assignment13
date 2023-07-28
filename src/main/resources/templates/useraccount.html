@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title> Create/ Update New Bank Account Page </title>
+</head>
+<body>
+
+    <h1 th:text="${account.getAccountName()}">   </h1>
+
+    <div style="font-size: xx-large">
+        <span th:text="${user.getUsername()} " >  </span> Account Info
+    </div>
+
+<form action="" method="post" >
+<!--    <input type="hidden" th:field="${accounts.accountId}"/>-->
+
+   <div >
+        Account Name: <input type="text" th:value="${account.getAccountName()}"/>
+    </div>
+        <div>
+        <input type="submit" value="Submit" />
+        </div>
+    <hr/>
+    <a th:href="@{/users/{userid}/useraccount/{accountId}(userid=${user.userid},accountId=${account.accountId})}">Back</a>
+</form>
+
+</body>
+</html>
