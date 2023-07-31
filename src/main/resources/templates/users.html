@@ -49,10 +49,7 @@
                    th:text="${account.accountName}"></a>
             </div>
             <hr>
-            <div th:each="account : ${user.accounts}">
-                <a th:href="@{/users/{userid}/useraccount/{accountId}(userid=${user.userid},accountId=${account.accountId})}">
-                Apply For / Update Bank Account </a>
-            </div>
+            
             <div>
 <!--                <input type="hidden" th:field="${accounts.accountId}"/>-->
                 <a th:href="@{/users/{userid}/registerNewUserAccount/(userid=${user.userid})}"

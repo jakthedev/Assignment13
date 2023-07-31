@@ -31,6 +31,7 @@ public class UserService {
         return userRepo.findByUsername(username);
     }
 
+
     public List<User> findByNameAndUsername(String name, String username) {
         return userRepo.findByNameAndUsername(name, username);
     }

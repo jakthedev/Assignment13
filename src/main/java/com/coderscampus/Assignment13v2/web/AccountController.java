@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @Controller
-//@RestController("/users/{userid}/useraccount/{accountId}")
 public class AccountController {
 
     @Autowired
@@ -32,7 +31,6 @@ public class AccountController {
 
         model.put("registerNewUserAccount", thisUserAcc);
         model.put("lastAccount", lastAccount);
-        //model.put("registerNewUserAccount", )
         return "registerNewUserAccount";
     }
 
@@ -44,11 +42,6 @@ public class AccountController {
         long count = users.stream().count();
         Account la = stream.skip(count - 1).findFirst().get();
         la.setAccountName(account.getAccountName());
-
-        //List<Account> la = Stream.of(users).reduce((a, b) -> b).get();
-
-//        Account lastAcc = users.stream().filter(c -> Boolean.parseBoolean(c.getAccountName()))
-//                .reduce((first, second) -> second).get();
         accountService.saveAccount(la);
 
         return "redirect:/users/"+user.getUserid();
@@ -65,13 +58,7 @@ public class AccountController {
         model.put("userid", userid);
         model.put("user", user);
         model.put("account", account);
-        //User user = userService.findById(userid);
-        //account.setAccountId(userid);
-        //Account thisaccount = user.getAccounts().stream().findFirst().get();
-        //account.setAccountName(account.getAccountName());
-        //account = accountService.saveAccount(account);
         return "useraccount";
-        //return "redirect:/users/"+userid+"/accounts/"+account.getAccountId();
     }
 
     @PostMapping("users/{userid}/useraccount")
@@ -83,42 +70,19 @@ public class AccountController {
         return "redirect:/users/" + userid;
     }
 
+    //@RequestMapping(value = "/users/{userid}/useraccount/{accountid}", method = RequestMethod.POST)
     @PostMapping("/users/{userid}/useraccount/{accountid}")
     public String updateAccount(ModelMap model, @PathVariable Long userid, @PathVariable Long accountid,
-                             @ModelAttribute Account account) {
+                                @ModelAttribute Account account) {
         Account existingAccount = accountService.findById(accountid);
-        existingAccount.setAccountName(account.getAccountName());
+        if (existingAccount != null) {
+            existingAccount.setAccountName(account.getAccountName());
+        }
+        User user = userService.findById(userid);
+
         accountService.saveAccount(existingAccount);
 
-        return "redirect:/users/" + userid;
-
-//        if (existingAccount != null) {
-//            existingAccount.setAccountName(account.getAccountName());
-//
-//            accountService.saveAccount(existingAccount);
-//
-//            return "redirect:/users/" + userid + "/useraccount/" + existingAccount.getAccountId();
-//        }
-//        User user = userService.findById(userid);
-//        user.setUserid(userid); //.setAccounts(userid);
-//        for(Account userAccount : user.getAccounts()) {
-//            if (userAccount.getAccountId() == userid) {
-//                account.setAccountId(userid);
-//            }
-        //return "redirect:/error.html";
+        return "redirect:/users/"+user.getUserid();
 
     }
-
-//        model.put("useraccount", account);
-//        model.put("users", user);
-//        return "useraccount";
-//    }
-
-//    @PostMapping("/users/{userid}/useraccount/{accountId}")
-//    public String getUserAccount(ModelMap model, @PathVariable Long userid, @PathVariable Long account) {
-//        model.put("user", this.userService.findById(userid));
-//        model.put("useraccount", accountService.findById(account));
-//        return "useraccount";
-//
-//    }
 }

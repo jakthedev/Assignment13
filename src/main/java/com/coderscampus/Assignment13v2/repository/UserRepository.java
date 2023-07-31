@@ -19,6 +19,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // select * from users where name = name
     List<User> findByName(String name);
 
+
+
     // select * from users where name = :name and username =:username
     List<User> findByNameAndUsername(String name, String username);
 
